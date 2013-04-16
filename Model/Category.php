@@ -16,11 +16,11 @@ class Category extends Model {
         return self::$_instance;
     }
 
-    public function add($parent = 1)
+    public function add($parent_id = 1)
     {
         $category = Model::factory('Category')->create();
         $category->image = "";
-        $category->parent_id = $parent;
+        $category->parent_id = $parent_id;
         $category->top = 0;
         $category->column = 0;
         $category->sort_order = 0;
@@ -31,5 +31,30 @@ class Category extends Model {
         $category->save();
 
         return $category->category_id;
+    }
+
+    public function create($name, $parent_id = 1)
+    {
+        //создаем категорию
+        $category_id =  Category::getInstance()->add($parent_id);
+        //добавляем название
+        CategoryDescription::getInstance()->add($category_id, $name);
+        //ставим соотвествие с магазином
+        CategoryStore::getInstance()->add($category_id);
+
+        return $category_id;
+    }
+
+    public function getId($name)
+    {
+        $category = Model::factory('CategoryDescription')
+            ->where_equal('name', $name)
+            ->find_one();
+
+        if ($category) {
+            return $category->category_id;
+        }
+
+        return $this->add($name);
     }
 }

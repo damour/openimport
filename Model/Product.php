@@ -51,4 +51,20 @@ class Product extends Model {
         return $product->product_id;
     }
 
+    public function create()
+    {
+    /*
+    * добавляем товар
+    */
+        $product_name = 'Тестовый товар';
+
+        $product_id = Product::getInstance()->add($product_name);
+        //название
+        ProductDescription::getInstance()->add($product_id, $product_name);
+        //добавляем товар в категорию
+        ProductCategory::getInstance()->add($product_id, $category_id);
+        //ставим соответсвие с магазином
+        ProductStore::getInstance()->add($product_id);
+    }
+
 }
