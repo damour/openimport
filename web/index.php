@@ -15,9 +15,9 @@ try {
     $brand_url = 'http://parfumstore.ru/perfumery/man/hugo-boss/';
     //$items = $store->getItems($brand_url);
 
-    $item = $store->parse_item('http://parfumstore.ru/products/hugo-boss-boss-bottled-night-shower-gel-150ml.html');
+    $item = $store->parse_item('http://parfumstore.ru/products/cacharel-noa-deodorant-cream-50ml.html');
 
-    Product::getInstance()->add();
+    //Product::getInstance()->add();
 
     print_r($item);
     // парсим страницу товара

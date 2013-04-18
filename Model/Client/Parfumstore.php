@@ -249,7 +249,18 @@ class Parfumstore {
         $price = str_replace("р.", "", $price);
         $price = round($price / 4);
 
-        $video = $crawler->filter('#t-video')->text();
+        $video = '';
+
+        foreach ($crawler->filter('#t-video') as $domElement) {
+            foreach($domElement->childNodes as $node) {
+                $video .= $domElement->ownerDocument->saveHTML($node);
+            }
+        }
+
+        $video = trim($video);
+
+        if (!empty($video))
+            $video = preg_replace("/data=\"(.*)\" style/", "data=\"$1?rel=0\" style", $video);
 
         $item = [
             'name'        => $h1,

@@ -6,6 +6,9 @@ class Category extends Model {
 
     protected static $_instance;
 
+    /**
+     * @return Category
+     */
     public static function getInstance() {
         // проверяем актуальность экземпляра
         if (null === self::$_instance) {
