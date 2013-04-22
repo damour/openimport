@@ -23,7 +23,7 @@ try {
     $item['manufacture'] = 'CHRISTIAN DIOR';
 
     // добавляем товар
-    //Product::getInstance()->create($item);
+    Product::getInstance()->create($item);
 
     print_r($item);
 
