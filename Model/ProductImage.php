@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\Yaml\Yaml;
+
 class ProductImage extends Model {
 
     public static $_table = 'product_image';
@@ -17,15 +19,17 @@ class ProductImage extends Model {
         return self::$_instance;
     }
 
-    public function add($product_id, $path)
+    public function add($product_id, $url)
     {
-        $path =  pathinfo($item['img'], PATHINFO_BASENAME);
+        $path = pathinfo($url, PATHINFO_BASENAME);
 
-        file_put_contents('/var/www/cap/domimoda.com/shared/upload/items/'.$path, file_get_contents($item['img']));
+        $image_path = Yaml::parse($_SERVER['DOCUMENT_ROOT'].'/config.yml')['image_path'];
+
+        file_put_contents($image_path.$path, file_get_contents($url));
 
         $image = Model::factory('ProductImage')->create();
         $image->product_id = $product_id;
-        $image->image = $path;
+        $image->image = 'data/'.$path;
         $image->sort_order = 0;
 
         $image->save();

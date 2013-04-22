@@ -32,7 +32,12 @@ class Manufacture extends Model {
 
         $manufacture->save();
 
-        return $manufacture->manufacturer_id;
+        $m_id = $manufacture->manufacturer_id;
+
+        ManufacturerDescription::getInstance()->add($m_id);
+        ManufacturerStore::getInstance()->add($m_id);
+
+        return $m_id;
     }
 
     /**

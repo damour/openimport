@@ -10,7 +10,8 @@
     ],
     "require": {
         "fabpot/goutte": "dev-master",
-        "j4mie/paris": "v1.3.0"
+        "j4mie/paris": "v1.3.0",
+        "symfony/yaml": "2.2.x-dev"
     },
     "autoload": {
         "psr-0": {

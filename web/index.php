@@ -15,18 +15,16 @@ try {
     $brand_url = 'http://parfumstore.ru/perfumery/man/hugo-boss/';
     //$items = $store->getItems($brand_url);
 
-    $item = $store->parse_item('http://parfumstore.ru/products/cacharel-noa-deodorant-cream-50ml.html');
+    // парсим страницу товара
+    $item = $store->parse_item('http://parfumstore.ru/products/estee-lauder-beyond-paradise-edp-30ml.html');
 
-    //Product::getInstance()->add();
+    $item['manufacture'] = 'ESTEE LAUDER ';
+
+    // добавляем товар
+    Product::getInstance()->create($item);
 
     print_r($item);
-    // парсим страницу товара
-    // добавляем товар
-    //$manufacture_id =  Manufacture::getInstance()->getId('Diesel3');
-
-    //echo $manufacture_id;
 
 } catch (Exception $e) {
     echo $e->getMessage();
 }
-

@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\Yaml\Yaml;
+
 class Product extends Model {
 
     public static $_id_column = 'product_id';
@@ -42,7 +44,7 @@ class Product extends Model {
         $product->minimum = 0;
         $product->sort_order = 0;
         $product->status = 1;
-        $product->video = $video;
+        $product->youtube_code = $video;
         $product->set_expr('date_added', 'NOW()');
         $product->set_expr('date_modified', 'NOW()');
         $product->viewed = 0;
@@ -52,18 +54,49 @@ class Product extends Model {
         return $product->product_id;
     }
 
-    public function create($product_name, $category_id, $images, $manufacturer_id, $price, $video)
+    public function create($params)
     {
-        // todo $first_image
+        $product_name = $params['name'];
+
+        // женская парфюмерия
+        $category_id =  Yaml::parse($_SERVER['DOCUMENT_ROOT'].'/config.yml')['category_id'];
+
+        $images = $params['images'];
+
+        // сохраняем картинку
+        $path =  pathinfo($images[0], PATHINFO_BASENAME);
+
+        $image_path = Yaml::parse($_SERVER['DOCUMENT_ROOT'].'/config.yml')['image_path'];
+
+        file_put_contents($image_path.$path, file_get_contents($images[0]));
+
+        $first_image = 'data/'.$path;
+
+        unset($images[0]);
+
+        $manufacturer_id = Manufacture::getInstance()->getId($params['manufacture']);
+
+        $price = $params['price'];
+
+        $video = $params['video'];
+
+        //создаем товар
         $product_id = Product::getInstance()->add($first_image, $manufacturer_id, $price, $video);
+
         //название
         ProductDescription::getInstance()->add($product_id, $product_name);
+
         //добавляем товар в категорию
         ProductCategory::getInstance()->add($product_id, $category_id);
+
         //ставим соответсвие с магазином
         ProductStore::getInstance()->add($product_id);
-        // todo добавляем картинки
-        // todo добавляем похожие товары
+
+        foreach ($images as $url) {
+            ProductImage::getInstance()->add($product_id, $url);
+        }
+
+        // todo добавляем опции
 
     }
 

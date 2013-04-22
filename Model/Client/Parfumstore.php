@@ -262,6 +262,16 @@ class Parfumstore {
         if (!empty($video))
             $video = preg_replace("/data=\"(.*)\" style/", "data=\"$1?rel=0\" style", $video);
 
+        $nodeValues = $crawler->filter('.product-item-volume span')->each(function ($node, $i) {
+            return $node->nodeValue;
+        });
+
+        $nodePrices = $crawler->filter('.product-item-price span')->each(function ($node, $i) {
+            return $node->nodeValue;
+        });
+
+        $options = array_combine($nodeValues, $nodePrices);
+
         $item = [
             'name'        => $h1,
             'images'      => $images,
