@@ -12,18 +12,19 @@ try {
     $brands = $store->getWoomanBrands();
 
     // проходимся по страницам и собираем ссылки на товар
-    $brand_url = 'http://parfumstore.ru/perfumery/man/hugo-boss/';
-    //$items = $store->getItems($brand_url);
+    $brand_url = 'http://parfumstore.ru/perfumery/woman/cacharel/';
 
-    // парсим страницу товара
-    $item = $store->parse_item('http://parfumstore.ru/products/boucheron-boucheron-pour-femme-edp-100ml.html');
+    $item['manufacture'] = 'CACHAREL';
 
-    $item['manufacture'] = 'CHRISTIAN DIOR';
+    $items = $store->getItems($brand_url);
 
-    // добавляем товар
-    Product::getInstance()->create($item);
+    foreach ($items as $item_url) {
+        // парсим страницу товара
+        $item = $store->parse_item($item_url);
 
-    print_r($item);
+        // добавляем товар
+        Product::getInstance()->create($item);
+    }
 
 } catch (Exception $e) {
     echo $e->getMessage();
