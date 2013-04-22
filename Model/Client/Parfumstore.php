@@ -259,7 +259,7 @@ class Parfumstore {
             $video = preg_replace("/data=\"(.*)\" style/", "data=\"$1?rel=0\" style", $video);
 
         if (preg_match('#http:\/\/www.youtube.com\/v\/\&amp\;hl\=en\&amp\;fs#', $video))
-            $video = NULL;
+            $video = '';
 
         $nodeValues = $crawler->filter('.product-item-volume span')->each(function ($node, $i) {
             return $node->nodeValue;

@@ -18,7 +18,7 @@ try {
     //$items = $store->getItems($brand_url);
 
     // парсим страницу товара
-    $item = $store->parse_item('http://parfumstore.ru/products/lanvin-eclat-d-arpege-edp-50ml.html');
+    $item = $store->parse_item('http://parfumstore.ru/products/boucheron-boucheron-pour-femme-edp-100ml.html');
 
     $item['manufacture'] = 'CHRISTIAN DIOR';
 
