@@ -1,4 +1,6 @@
 <?php
+mb_internal_encoding("UTF-8");
+
 require_once "../vendor/autoload.php";
 require_once "config.php";
 
@@ -16,12 +18,12 @@ try {
     //$items = $store->getItems($brand_url);
 
     // парсим страницу товара
-    $item = $store->parse_item('http://parfumstore.ru/products/estee-lauder-beyond-paradise-edp-30ml.html');
+    $item = $store->parse_item('http://parfumstore.ru/products/lanvin-eclat-d-arpege-edp-50ml.html');
 
-    $item['manufacture'] = 'ESTEE LAUDER ';
+    $item['manufacture'] = 'CHRISTIAN DIOR';
 
     // добавляем товар
-    Product::getInstance()->create($item);
+    //Product::getInstance()->create($item);
 
     print_r($item);
 

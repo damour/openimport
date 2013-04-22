@@ -236,13 +236,9 @@ class Parfumstore {
 
         $h1 = trim(preg_replace("/.*\n\t<br>\n\t/", '', $h1));
 
-        $description = '';
+        $h1 = preg_replace("/\s[0-9]+МЛ/", "", $h1);
 
-        foreach ($crawler->filter('.product-main-info') as $domElement) {
-            foreach($domElement->childNodes as $node) {
-                $description .= $domElement->ownerDocument->saveHTML($node);
-            }
-        }
+        $description = trim($crawler->filter('.product-main-info')->text());
 
         $price = $crawler->filter('.product-price')->text();
         $price = str_replace(" ", "", $price);
@@ -262,6 +258,9 @@ class Parfumstore {
         if (!empty($video))
             $video = preg_replace("/data=\"(.*)\" style/", "data=\"$1?rel=0\" style", $video);
 
+        if (preg_match('#http:\/\/www.youtube.com\/v\/\&amp\;hl\=en\&amp\;fs#', $video))
+            $video = NULL;
+
         $nodeValues = $crawler->filter('.product-item-volume span')->each(function ($node, $i) {
             return $node->nodeValue;
         });
@@ -269,6 +268,9 @@ class Parfumstore {
         $nodePrices = $crawler->filter('.product-item-price span')->each(function ($node, $i) {
             return $node->nodeValue;
         });
+
+        $description = trim(preg_replace('#.*Композиция\n#s', '', $description));
+        $description = trim(preg_replace('/развернуть.*/s', '', $description));
 
         $options = array_combine($nodeValues, $nodePrices);
 

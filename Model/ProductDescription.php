@@ -16,13 +16,13 @@ class ProductDescription extends Model {
         return self::$_instance;
     }
 
-    public function add($product_id, $name)
+    public function add($product_id, $name, $description)
     {
         $category = Model::factory('ProductDescription')->create();
         $category->product_id = $product_id;
         $category->language_id = 1;
         $category->name = $name;
-        $category->description = '';
+        $category->description = $description;
         $category->meta_description = '';
         $category->meta_keyword = '';
         $category->seo_title = '';

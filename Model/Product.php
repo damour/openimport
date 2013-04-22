@@ -84,7 +84,7 @@ class Product extends Model {
         $product_id = Product::getInstance()->add($first_image, $manufacturer_id, $price, $video);
 
         //название
-        ProductDescription::getInstance()->add($product_id, $product_name);
+        ProductDescription::getInstance()->add($product_id, $product_name, $params['description']);
 
         //добавляем товар в категорию
         ProductCategory::getInstance()->add($product_id, $category_id);
