@@ -12,15 +12,17 @@ try {
     $brands = $store->getWoomanBrands();
 
     // проходимся по страницам и собираем ссылки на товар
-    $brand_url = 'http://parfumstore.ru/perfumery/woman/cacharel/';
+    $brand_url = 'http://parfumstore.ru/perfumery/woman/baldinini/';
 
-    $item['manufacture'] = 'CACHAREL';
+
 
     $items = $store->getItems($brand_url);
 
     foreach ($items as $item_url) {
         // парсим страницу товара
         $item = $store->parse_item($item_url);
+
+        $item['manufacture'] = 'BALDININI';
 
         // добавляем товар
         Product::getInstance()->create($item);

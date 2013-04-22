@@ -21,7 +21,7 @@ class ProductCategory extends Model {
         $category = Model::factory('ProductCategory')->create();
         $category->product_id = $product_id;
         $category->category_id = $category_id;
-        $category->main_category = $category_id;
+        $category->main_category = 1;
 
         $category->save();
     }
